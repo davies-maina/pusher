@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -8,6 +7,13 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import '@mdi/font/css/materialdesignicons.css'
+
+import Vue from 'vue';
+import Vuetify from 'vuetify';
+
+Vue.use(Vuetify);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -18,5 +24,6 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 const app = new Vue({
+    vuetify: new Vuetify(),
     el: '#app'
 });
