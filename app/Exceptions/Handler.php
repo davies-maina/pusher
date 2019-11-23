@@ -51,13 +51,13 @@ class Handler extends ExceptionHandler
     {
 
         if ($exception instanceOf TokenInvalidException) {
-            return response()->json(['error'=>'Invalid token'],400);
-        }
-
-        else if($exception instanceof TokenExpiredException) {
-            return response()->json(['error' => 'Expired token'], 400);
+            return response()->json(['error'=>'Token not provided'], Response::HTTP_BAD_REQUEST);
+        } else if ($exception instanceof TokenBlacklistedException) {
+            return response()->json(['error' => 'Token corrupted, get new one'],Response::HTTP_BAD_REQUEST);
+        } else if ($exception instanceof TokenExpiredException) {
+            return response()->json(['error' => 'Expired token'], Response::HTTP_BAD_REQUEST);
         } else if ($exception instanceof JWTException) {
-            return response()->json(['error' => 'Token has problem'], 400);
+            return response()->json(['error' => 'Token is not provided'], Response::HTTP_BAD_REQUEST);
         }
         return parent::render($request, $exception);
     }
