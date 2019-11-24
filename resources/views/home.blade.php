@@ -4,24 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Sonar</title>
+<meta name="csrf-token" content="{{csrf_token()}}">
 <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
     <div id="app">
 
         <v-app>
-            <v-toolbar>
-      <v-toolbar-title>Title</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-
-      <v-toolbar-items>
-        <v-btn text>Link 1</v-btn>
-        <v-btn text>Link 2</v-btn>
-        <v-btn text>Link 3</v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
+            <app-home></app-home>
         </v-app>
 
 
