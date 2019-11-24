@@ -21,7 +21,7 @@ Vue.use(Vuetify);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('app-home', require('./components/AppHome.vue'));
+Vue.component('navbar', require('./components/NavBar.vue'));
 import router from '../js/Router/router';
 const app = new Vue({
     vuetify: new Vuetify(),
