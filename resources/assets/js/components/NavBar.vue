@@ -9,9 +9,13 @@
         <v-list-item
           v-for="item in items"
           :key="item.text"
+         
           link
           router :to="item.route"
-        >
+          v-if="item.show"
+
+         
+    >
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -24,7 +28,7 @@
         
        <!--  <v-list-item link>
           <v-list-item-action>
-            <v-icon color="grey darken-1">mdi-settings</v-icon>
+            <v-icon color="gre y darken-1">mdi-settings</v-icon>
           </v-list-item-action>
           <v-list-item-title class="grey--text text--darken-1">Manage Subscriptions</v-list-item-title>
         </v-list-item> -->
@@ -77,6 +81,7 @@
 import navbar from './NavBar';
 import appfooter from './AppFooter';
 import login from './login/Login';
+import User from '../Helpers/User';
   export default {
     props: {
       source: String,
@@ -85,19 +90,52 @@ import login from './login/Login';
 
         navbar,appfooter,login
     },
-    data: () => ({
-      drawer: null,
-      items: [
-        { icon: 'forum', text: 'Forum' },
-        { icon: 'question_answer', text: 'Ask question' },
-        { icon: 'category', text: 'Category' },
-        { icon: 'navigate_next', text: 'Log in', route:'/login'},
+
+    
+    data(){
+      
+      return {
+         drawer:null,
+        items: [
+         
+        { icon: 'forum', text: 'Forum', route:'/forum',show:true},
+        { icon: 'question_answer', text: 'Ask question', route:'/ask',show: User.loggedIn()},
+        { icon: 'category', text: 'Category', route:'/category', show: User.loggedIn() },
+        { icon: 'navigate_next', text: 'Log in', route:'/login', show: !User.loggedIn()},
+        { icon: 'power_settings_new', text: 'Log out', route:'/logout', show: User.loggedIn()},
+        { icon: 'navigate_next', text: 'Sign up', route:'/signup', show: !User.loggedIn() },
         
-      ],
+      ]
+      }
+
+      
+      
+      
      
-    }),
-    created () {
-      this.$vuetify.theme.dark = true
     },
-  }
+    created() {
+      this.$vuetify.theme.dark = true;
+      EventBus.$on('logout', ()=>{
+
+        User.logout();
+
+      })
+    },
+    
+
+    computed: {
+      /* items(){
+
+        return [
+        { icon: 'forum', text: 'Forum', route:'/forum',show:true},
+        { icon: 'question_answer', text: 'Ask question', route:'/ask',show: User.loggedIn()},
+        { icon: 'category', text: 'Category', route:'/category', show: User.loggedIn() },
+        { icon: 'navigate_next', text: 'Log in', route:'/login', show: !User.loggedIn()},
+        { icon: 'power_settings_new', text: 'Log out', route:'/logout', show: User.loggedIn()},
+        { icon: 'navigate_next', text: 'Sign up', route:'/signup', show: !User.loggedIn() },
+        
+      
+        ]
+    }, */
+  }}
 </script>

@@ -22,6 +22,8 @@ Vue.use(Vuetify);
  */
 import User from './Helpers/User';
 window.User = User;
+
+window.EventBus = new Vue();
 User.hasToken();
 Vue.component('navbar', require('./components/NavBar.vue'));
 import router from '../js/Router/router';

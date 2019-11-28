@@ -1,74 +1,65 @@
-import Token from './Token';
-import AppStorage from './AppStorage';
+import Token from './Token'
+import AppStorage from './AppStorage'
+
 class User {
-
-    login(formData) {
-
-        axios.post('api/auth/login', formData)
-            .then((response) => {
-
-                /* Token.payload(response.data.access_token); */
-
-                this.responseAfterLogin(response)
-
-            })
-
-        .catch((error) => {
-
-            console.log(error.response.data);
-        })
+    login(data) {
+        axios.post('/api/auth/login', data)
+            .then(res => this.responseAfterLogin(res))
+            .catch(error => console.log(error.response.data))
     }
 
-    responseAfterLogin(response) {
+    responseAfterLogin(res) {
+        const access_token = res.data.access_token
+        const username = res.data.user
 
-        const access_token = response.data.access_token;
-        const username = response.data.user
-        if (Token.tokenValidity) {
-
-            AppStorage.store(username, access_token);
+        if (Token.isValid(access_token)) {
+            AppStorage.store(username, access_token)
+            window.location = '/forum'
         }
-
     }
 
     hasToken() {
-
         const storedToken = AppStorage.getToken();
-
         if (storedToken) {
-            return Token.tokenValidity(storedToken) ? true : false;
+            return Token.isValid(storedToken) ? true : this.logout()
         }
-
-        return false;
+        return false
     }
 
-
     loggedIn() {
-
         return this.hasToken();
     }
 
-    logOut() {
-
+    logout() {
         AppStorage.clear();
+        window.location = '/forum';
+        /*  console.log('work') */
     }
 
     name() {
-
         if (this.loggedIn()) {
-            return AppStorage.getUser();
+            return AppStorage.getUser()
         }
     }
 
     id() {
-
         if (this.loggedIn()) {
-
-            const payload = Token.payload(AppStorage.getToken());
-
-            return payload.sub;
+            const payload = Token.payload(AppStorage.getToken())
+            return payload.sub
         }
     }
 
+    own(id) {
+        return this.id() == id
+    }
+
+    admin() {
+        return this.id() == 1
+    }
+
+
+
+
 }
 
-export default User = new User;
+export default User = new User();
