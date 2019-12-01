@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
 
 
         'jwt' => \App\Http\Middleware\JWT::class,
+        
     ];
 }

@@ -114,7 +114,7 @@ import User from '../Helpers/User';
      
     },
     created() {
-      this.$vuetify.theme.dark = true;
+      this.$vuetify.theme.dark = false;
       EventBus.$on('logout', ()=>{
 
         User.logout();
