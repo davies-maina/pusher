@@ -13,7 +13,7 @@
                 <v-btn icon small>
                     <v-icon>edit</v-icon>
                 </v-btn>
-                <v-btn icon small>
+                <v-btn icon small @click="deleteR">
                     <v-icon>delete</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -24,13 +24,20 @@
 <script>
 import User from '../../Helpers/User';
 export default {
-    props:['data'],
+    props:['data','index'],
 
 
 
     computed: {
         own(){
             return User.own(this.data.user_id)
+        }
+    },
+
+    methods: {
+        deleteR(){
+            EventBus.$emit('deleteReply', this.index)
+
         }
     },
 }

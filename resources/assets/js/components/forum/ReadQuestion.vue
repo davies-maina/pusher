@@ -4,7 +4,7 @@
         <div v-else>
             <showquestion :data=question></showquestion>
             <v-container>
-                <replies :replies="question.replies"></replies>
+                <replies :question="question"></replies>
             <newreply :qSlug="question.slug"></newreply>
             </v-container>
         </div>

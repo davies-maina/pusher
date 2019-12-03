@@ -111938,8 +111938,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.content, function(reply) {
-      return _c("reply", { key: reply.id, attrs: { data: reply } })
+    _vm._l(_vm.content, function(reply, index) {
+      return _c("reply", {
+        key: reply.id,
+        attrs: { data: reply, index: index }
+      })
     }),
     1
   )
@@ -111976,9 +111979,7 @@ var render = function() {
                   _c(
                     "v-container",
                     [
-                      _c("replies", {
-                        attrs: { replies: _vm.question.replies }
-                      }),
+                      _c("replies", { attrs: { question: _vm.question } }),
                       _vm._v(" "),
                       _c("newreply", { attrs: { qSlug: _vm.question.slug } })
                     ],
@@ -112612,7 +112613,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['replies'],
+    props: ['question'],
     components: {
         reply: __WEBPACK_IMPORTED_MODULE_0__reply___default.a
     },
@@ -112622,7 +112623,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            content: this.replies
+            content: this.question.replies
         };
     },
 
@@ -112633,6 +112634,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             EventBus.$on('newReplyCreated', function (reply) {
                 _this.content.unshift(reply);
+            });
+
+            EventBus.$on('deleteReply', function (index) {
+
+                axios.delete('/api/question/' + _this.question.slug + '/reply/' + _this.content[index].id).then(function (res) {
+
+                    _this.content.splice(index, 1);
+                });
             });
         }
     }
@@ -112718,11 +112727,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['data'],
+    props: ['data', 'index'],
 
     computed: {
         own: function own() {
             return __WEBPACK_IMPORTED_MODULE_0__Helpers_User__["a" /* default */].own(this.data.user_id);
+        }
+    },
+
+    methods: {
+        deleteR: function deleteR() {
+            EventBus.$emit('deleteReply', this.index);
         }
     }
 });
@@ -112773,7 +112788,10 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-btn",
-                    { attrs: { icon: "", small: "" } },
+                    {
+                      attrs: { icon: "", small: "" },
+                      on: { click: _vm.deleteR }
+                    },
                     [_c("v-icon", [_vm._v("delete")])],
                     1
                   )
