@@ -9,6 +9,7 @@ import Forum from '../components/forum/Forum.vue';
 import Logout from '../components/login/Logout.vue';
 import Read from '../components/forum/ReadQuestion.vue';
 import Create from '../components/forum/Create.vue';
+import CreateCategory from '../components/forum/CreateCategory.vue';
 
 const routes = [
 
@@ -18,6 +19,7 @@ const routes = [
     { path: '/question/:slug', component: Read },
     { path: '/logout', component: Logout },
     { path: '/ask', component: Create },
+    { path: '/category', component: CreateCategory },
 
 ];
 

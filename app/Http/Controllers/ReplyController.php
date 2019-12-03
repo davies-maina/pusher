@@ -54,7 +54,7 @@ class ReplyController extends Controller
     {
        $reply=$question->reply()->create($request->all());
 
-       return response(['reply'=>new CategoryResource($reply)], Response::HTTP_CREATED);
+       return response(['reply'=>new ReplyResource($reply)], Response::HTTP_CREATED);
     }
 
     /**

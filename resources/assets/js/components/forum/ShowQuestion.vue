@@ -7,7 +7,7 @@
                 <span class="grey--text">{{data.user}} , {{data.created_at}}</span>
                 </div>
                 <v-spacer></v-spacer>
-                <v-btn class="mx-auto">5 replies</v-btn>
+                <v-btn class="mx-auto">{{data.reply_count}} replies</v-btn>
                 
             </v-card-title>
             <v-card-text v-html="body"></v-card-text>

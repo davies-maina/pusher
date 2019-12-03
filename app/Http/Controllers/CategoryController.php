@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CategoryResource;
 use App\Model\Category;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -38,11 +39,11 @@ class CategoryController extends Controller
     {
         $category=new Category;
         $category->name=$request->name;
-        $category->slug=str_slug($request->slug);
+        $category->slug=str_slug($request->name);
 
         $category->save();
 
-        return response('created', Response::HTTP_CREATED);
+        return response(new CategoryResource($category), Response::HTTP_CREATED);
     }
 
     /**
@@ -77,12 +78,12 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $category->update(
-            ['name'=>$request->name, 'slug' => str_slug($request->slug)]
+            ['name'=>$request->name, 'slug' => str_slug($request->name)]
         
         
         );
 
-        return response('updated', Response::HTTP_ACCEPTED);
+        return response(new CategoryResource($category), Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -94,6 +95,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return response(NULL,Response::HTTP_NO_CONTENT);
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

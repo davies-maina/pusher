@@ -9,16 +9,19 @@
                 :question=question
                 ></questioncomp>
             </v-flex>
-            sidebar
+            <v-flex>
+                <sidebar></sidebar>
+                </v-flex>
         </v-layout>
     </v-container>
 </template>
 
 <script>
 import questioncomp from './Question';
+import sidebar from './SideBar';
 export default {
     components:{
-        questioncomp
+        questioncomp,sidebar
     },
     created() {
         axios.get('api/question')

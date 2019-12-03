@@ -100,7 +100,7 @@ import User from '../Helpers/User';
          
         { icon: 'forum', text: 'Forum', route:'/forum',show:true},
         { icon: 'question_answer', text: 'Ask question', route:'/ask',show: User.loggedIn()},
-        { icon: 'category', text: 'Category', route:'/category', show: User.loggedIn() },
+        { icon: 'category', text: 'Category', route:'/category', show: User.admin() },
         { icon: 'navigate_next', text: 'Log in', route:'/login', show: !User.loggedIn()},
         { icon: 'power_settings_new', text: 'Log out', route:'/logout', show: User.loggedIn()},
         { icon: 'navigate_next', text: 'Sign up', route:'/signup', show: !User.loggedIn() },
