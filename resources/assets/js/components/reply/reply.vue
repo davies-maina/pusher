@@ -4,6 +4,8 @@
             <v-card-title>
                 <div class="headline">{{data.user}}</div>
                 <div class="ml-2"> , {{data.created_at}}</div>
+                <v-spacer></v-spacer>
+                <like :content="data"></like>
             </v-card-title>
             <v-divider></v-divider>
             <editreply v-if="editingR" :reply="data"></editreply>
@@ -29,10 +31,11 @@
 import User from '../../Helpers/User';
 import md from 'marked';
 import editreply from './EditReply';
+import like from '../like/Like';
 export default {
     props:['data','index'],
     components:{
-        editreply
+        editreply,like
     },
     data() {
         return {
