@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CategoryResource;
-use App\Http\Resources\ReplyResource;
 use App\Model\Reply;
 use App\Model\Question;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
 use Illuminate\Routing\Controller;
+use App\Http\Resources\ReplyResource;
+use App\Http\Resources\CategoryResource;
+/* use Illuminate\Support\Facades\Notification;
+ */
+
+
+use App\Notifications\ReplyNotification;
+use Illuminate\Support\Facades\Notification;
 
 class ReplyController extends Controller
 {
@@ -52,9 +57,18 @@ class ReplyController extends Controller
      */
     public function store(Question $question,Request $request)
     {
-       $reply=$question->reply()->create($request->all());
+        $reply = $question->reply()->create($request->all());
+        $user = $question->user;
 
-       return response(['reply'=>new ReplyResource($reply)], Response::HTTP_CREATED);
+        if($reply->user_id !==$question->user_id){
+
+            Notification::send($user, new ReplyNotification($reply));
+        }
+
+        /* $user->notify(new ReplyNotification($reply)); */
+        
+
+        return response(['reply' => new ReplyResource($reply)], Response::HTTP_CREATED);
     }
 
     /**

@@ -51,14 +51,7 @@
         align="center"
         style="max-width: 650px"
       >
-        <v-text-field
-          :append-icon-cb="() => {}"
-          placeholder="Search..."
-          single-line
-          append-icon="search"
-          color="white"
-          hide-details
-        />
+        <notification v-if="loggedIn"></notification>
       </v-row>
     </v-app-bar>
     <v-content>
@@ -82,13 +75,14 @@ import navbar from './NavBar';
 import appfooter from './AppFooter';
 import login from './login/Login';
 import User from '../Helpers/User';
+import notification from './Notification';
   export default {
     props: {
       source: String,
     },
      components:{
 
-        navbar,appfooter,login
+        navbar,appfooter,login,notification
     },
 
     
@@ -96,6 +90,7 @@ import User from '../Helpers/User';
       
       return {
          drawer:null,
+         loggedIn:User.loggedIn(),
         items: [
          
         { icon: 'forum', text: 'Forum', route:'/forum',show:true},
