@@ -29,7 +29,7 @@ class ReplyNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database','broadcast'];
     }
     /**
      * Get the array representation of the notification.
@@ -44,5 +44,14 @@ class ReplyNotification extends Notification
             'question' => $this->reply->question->title,
             'path' => $this->reply->question->path,
         ];
+    }
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage([
+            'repliedBy' => $this->reply->user->name,
+            'question' => $this->reply->question->title,
+            'path' => $this->reply->question->path,
+            'reply'=>new ReplyResource($this->reply)
+        ]);
     }
 }

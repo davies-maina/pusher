@@ -14,6 +14,11 @@
             <v-list-item-title  class="mx-2" @click="markMessageRead(item)">{{item.question}}</v-list-item-title>
             </router-link>
        </v-list-item>
+       <v-divider></v-divider>
+
+        <v-list-item v-for="item in read" :key="item.id">
+          <v-list-item-title>{{item.question}}</v-list-item-title>
+        </v-list-item>
     </v-list>
             
         </v-menu>
@@ -28,6 +33,11 @@ export default {
 
             this.getNotifications();
         }
+        Echo.private('App.User.' + User.id())
+    .notification((notification) => {
+        this.unread.unshift(notification);
+        this.unreadCount++;
+    });
     },
 
     data() {
