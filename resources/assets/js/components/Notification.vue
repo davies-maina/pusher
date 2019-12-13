@@ -36,6 +36,7 @@ export default {
         }
         Echo.private('App.User.' + User.id())
     .notification((notification) => {
+        this.playSound();
         this.unread.unshift(notification);
         this.unreadCount++;
     });
@@ -45,11 +46,18 @@ export default {
         return {
             read:{},
             unread:{},
-            unreadCount: 0
+            unreadCount: 0,
+            sound:"http://soundbible.com/mp3/A-Tone-His_Self-1266414414.mp3"
         }
     },
 
     methods: {
+
+        playSound(){
+            let notifAlert=new Audio(this.sound);
+            alert.play();
+
+        },
         getNotifications(){
            
         axios.post("/api/notifications")

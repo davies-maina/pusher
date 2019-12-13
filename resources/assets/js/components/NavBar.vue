@@ -38,13 +38,16 @@
     <v-app-bar
       app
       clipped-left
-      color="blue"
+      dark
       dense
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-icon class="mx-4">explore</v-icon>
       <v-toolbar-title class="mr-12 align-center">
-        <span class="title">Sonar</span>
+        <span class="title">
+          <router-link to="/forum" class="white--text">Sonar</router-link>
+          
+          </span>
       </v-toolbar-title>
       <v-spacer />
       <v-row

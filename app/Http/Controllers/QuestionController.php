@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Requests\QuestionRequest;
 use App\Model\Question;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -38,7 +38,7 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuestionRequest $request)
 
     {
         

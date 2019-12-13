@@ -1,13 +1,16 @@
 use App\Model\Category;
 <template>
     <v-container>
+        <v-alert type="error" :value="true" v-if="errors">
+            Give a category name
+        </v-alert>
         <v-form @submit.prevent="newCategory">
             <v-text-field label="Category name *" v-model="form.name" required>
 
             </v-text-field>
             
-            <v-btn type="submit" color="primary" v-if="editSlug" class="mt-2 mb-2">Update</v-btn>
-            <v-btn type="submit" color="primary" class="mt-2 mb-2" v-else>Create</v-btn>
+            <v-btn type="submit" color="primary" v-if="editSlug" class="mt-2 mb-2" :disabled="disabled">Update</v-btn>
+            <v-btn type="submit" color="primary" class="mt-2 mb-2" v-else :disabled="disabled">Create</v-btn>
         </v-form>
         <v-card class="mt-2">
           <v-toolbar color="indigo" dark dense>
@@ -53,7 +56,8 @@ export default {
             },
 
             categories:{},
-            editSlug:''
+            editSlug:'',
+            errors:''
         }
     },
 
@@ -72,6 +76,10 @@ export default {
                    this.categories.unshift(response.data);
                    this.form.name='';
 
+                })
+                .catch((error)=>{
+
+                    this.errors=error.response.data.errors
                 })
 
         },
@@ -113,6 +121,12 @@ export default {
 
                 this.categories=res.data.data;
             })
+    },
+    computed: {
+        disabled(){
+
+            return !(this.form.name);
+        }
     },
 }
 </script>
