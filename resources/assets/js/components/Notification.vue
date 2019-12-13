@@ -27,6 +27,7 @@
 
 <script>
 import User from '../Helpers/User'
+import Exception from '../Helpers/Exception'
 export default {
     created() {
         if(User.loggedIn){
@@ -60,11 +61,16 @@ export default {
           /* console.log(res) */
         })
 
+    .catch((error)=>{
+        Exception.handle(error)
+
+    })
+
         },
 
         markMessageRead(notification){
 
-            axios.post('api/markAsRead',{id:notification.id})
+            axios.post('/api/markAsRead',{id:notification.id})
                 .then((res)=>{
                     this.read.push(notification);
                     this.unread.splice(notification,1);
