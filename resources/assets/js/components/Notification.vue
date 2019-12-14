@@ -55,7 +55,7 @@ export default {
 
         playSound(){
             let notifAlert=new Audio(this.sound);
-            alert.play();
+            notifAlert.play();
 
         },
         getNotifications(){
